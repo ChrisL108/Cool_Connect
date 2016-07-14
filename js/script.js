@@ -6,7 +6,7 @@ $(document).ready(function() {
 		$smsCarrier = $('#carrier');
 	var $emailCheck = $('#email-check'),
 		$emailInfo = $('#email-info');
-
+	var $name = $('#name');
 	var $message = $('#message');
 	var $inputs = $('input, textarea'); // to clear after submit
 	var $submit = $('button#sendButton');
@@ -15,14 +15,15 @@ $(document).ready(function() {
 		validator();
 	});
 
-	function sendMessage(message, recipient) {
+	function sendMessage(recipientEmail) {
 		console.log( `Message: ${ message }, Recipient: ${ recipient }, Carrier: ${ $smsCarrier.val() }` );
 
 		$.ajax({
 			url: $('form').prop('action'),
 			type: 'POST',
-			data: { message: message,
-				    recipient: recipient
+			data: { name: $name.val(),
+					message: $message.val(),
+				    email: recipientEmail
 				},
 		})
 		.done(function() {
@@ -54,6 +55,8 @@ $(document).ready(function() {
 		}
 
 		$inputs.val("");
+		//$('#myCheckbox').prop('checked', true); // Checks it
+		//$('#myCheckbox').prop('checked', false); // Unchecks it
 	}
 
 	// if ( checkbox : checked )... 
