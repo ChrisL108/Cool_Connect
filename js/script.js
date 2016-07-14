@@ -18,7 +18,7 @@ $(document).ready(function() {
 	function sendMessage(recipientEmail) {
 
 		$.ajax({
-			url: $('form').prop('action'),
+			url: 'messenger.php',
 			type: 'POST',
 			data: { name: $name.val(),
 					message: $message.val(),
@@ -41,8 +41,8 @@ $(document).ready(function() {
 	// and remove whitespace/spcial characters
 	function validator() {
 		if ( $smsCheck.is(':checked') && $smsInfo.val() ) {
-			sendMessage( $smsInfo.val()
-						 	.replace(/[^A-Z0-9]/ig, "") );
+			console.log(sendMessage( $smsInfo.val().replace(/[^A-Z0-9]/ig, "")  + 
+						 getServiceEmail($smsCarrier.val()))/*;*/ );
 			$smsInfo.slideUp();
 			$smsCarrier.slideUp();
 		}
@@ -54,6 +54,27 @@ $(document).ready(function() {
 		$inputs.val("");
 		//$('#myCheckbox').prop('checked', true); // Checks it
 		//$('#myCheckbox').prop('checked', false); // Unchecks it
+	}
+
+	function getServiceEmail(service) {
+		switch(service) {
+			case 'att' : return '@txt.att.net';
+			case 'tmobile' : return '@tmomail.net';
+			case 'sprint' : return '@messaging.sprintpcs.com';
+			case 'verizon' : return '@vtext.com';
+			case 'virgin' : return '@vmobl.com';
+			case 'tracfone' : return '@mmst5.tracfone.com';
+			case 'metro' : return '@mymetropcs.com';
+			case 'boost' : return '@myboostmobile.com';
+			case 'cricket' : return '@sms.mycricket.com';
+			case 'nextel' : return '@messaging.nextel.com';
+			case 'alltel' : return '@message.alltel.com';
+			case 'ptel' : return '@ptel.com';
+			case 'suncom' : return '@tms.suncom.com';
+			case 'qwest' : return '@qwestmp.com';
+			case 'usc' : return '@email.uscc.net';
+
+		}
 	}
 
 	// if ( checkbox : checked )... 
@@ -100,3 +121,5 @@ $(document).ready(function() {
 // Suncom: number@tms.suncom.com
 // Qwest: number@qwestmp.com
 // U.S. Cellular: number@email.uscc.net
+
+
