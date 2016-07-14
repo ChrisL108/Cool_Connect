@@ -41,15 +41,13 @@ $(document).ready(function() {
 	// and remove whitespace/spcial characters
 	function validator() {
 		if ( $smsCheck.is(':checked') && $smsInfo.val() ) {
-			sendMessage( $message.val() , 
-						 $smsInfo.val()
+			sendMessage( $smsInfo.val()
 						 	.replace(/[^A-Z0-9]/ig, "") );
 			$smsInfo.slideUp();
 			$smsCarrier.slideUp();
 		}
 		if ( $emailCheck.is(':checked') && $emailInfo.val() )  {
-			sendMessage( $message.val() , 
-		    			 $emailInfo.val() );
+			sendMessage( $emailInfo.val() );
 			$emailInfo.slideUp();
 		}
 
