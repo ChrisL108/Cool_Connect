@@ -16,14 +16,13 @@ $(document).ready(function() {
 	});
 
 	function sendMessage(recipientEmail) {
-		console.log( `Message: ${ message }, Recipient: ${ recipient }, Carrier: ${ $smsCarrier.val() }` );
 
 		$.ajax({
 			url: $('form').prop('action'),
 			type: 'POST',
 			data: { name: $name.val(),
 					message: $message.val(),
-				    email: recipientEmail
+					email: recipientEmail
 				},
 		})
 		.done(function() {
