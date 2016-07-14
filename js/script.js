@@ -28,32 +28,39 @@ $(document).ready(function() {
 		.done(function() {
 			console.log("Message Sent!");
 		})
-		.fail(function() {
-			console.log("error");
+		.fail(function(e) {
+			console.log("error - " + e);
 		})
 		.always(function() {
 			console.log("complete");
 		});
 		
-	}
+	} // sendMessage()
 
+	var editedNum, editedCarrier;
 	// Validate which inputs are checked 
 	// and remove whitespace/spcial characters
 	function validator() {
 		if ( $smsCheck.is(':checked') && $smsInfo.val() ) {
-			console.log(sendMessage( $smsInfo.val().replace(/[^A-Z0-9]/ig, "")  + 
-						 getServiceEmail($smsCarrier.val()))/*;*/ );
+			editedNum = $smsInfo.val();
+			editedCarrier = getServiceEmail( $smsCarrier.val() );
+			// .replace(/[^A-Z0-9]/ig, "")
+			sendMessage( editedNum + editedCarrier );
+			
+			console.log("SMS Sent...");
 			$smsInfo.slideUp();
 			$smsCarrier.slideUp();
 		}
 		if ( $emailCheck.is(':checked') && $emailInfo.val() )  {
 			sendMessage( $emailInfo.val() );
+			console.log("EMAIL Sent...");
 			$emailInfo.slideUp();
 		}
 
 		$inputs.val("");
-		//$('#myCheckbox').prop('checked', true); // Checks it
-		//$('#myCheckbox').prop('checked', false); // Unchecks it
+		$smsCheck.prop('checked', false); // Checks it
+		$emailCheck.prop('checked', false); // Unchecks it
+
 	}
 
 	function getServiceEmail(service) {
