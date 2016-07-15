@@ -15,27 +15,6 @@ $(document).ready(function() {
 		validator();
 	});
 
-	function sendMessage(recipientEmail) {
-
-		$.ajax({
-			url: 'messenger.php',
-			type: 'POST',
-			data: { name: $name.val(),
-					message: $message.val(),
-					email: recipientEmail
-				},
-		})
-		.done(function() {
-			console.log("Message Sent!");
-		})
-		.fail(function(e) {
-			console.log("error - " + e);
-		})
-		.always(function() {
-			console.log("complete");
-		});
-		
-	} // sendMessage()
 
 	var editedNum, editedCarrier;
 	// Validate which inputs are checked 
@@ -58,10 +37,36 @@ $(document).ready(function() {
 		}
 
 		$inputs.val("");
-		$smsCheck.prop('checked', false); // Checks it
-		$emailCheck.prop('checked', false); // Unchecks it
+		$inputs.prop('checked', false);
+		// $smsCheck.prop('checked', false);  
+		// $emailCheck.prop('checked', false); // Unchecks it
 
 	}
+
+	// function that handles AJAX calls
+	function sendMessage(recipientEmail) {
+
+		$.ajax({
+			url: 'messenger.php',
+			type: 'POST',
+			data: { name: $name.val(),
+					message: $message.val(),
+					email: recipientEmail
+				},
+		})
+		.done(function() {
+			console.log("Message Sent!");
+		})
+		.fail(function(e) {
+			console.log("error - " + e.responseText);
+		})
+		.always(function() {
+			console.log("complete");
+		});
+		
+	} // sendMessage()
+
+
 
 	function getServiceEmail(service) {
 		switch(service) {
