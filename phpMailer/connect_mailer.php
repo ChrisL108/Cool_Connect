@@ -14,10 +14,10 @@
 
 	$mail = new PHPMailer;
 
-	//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+	$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
 	$mail->isSMTP();                                      // Set mailer to use SMTP
-	$mail->Host = 'mail.chrislacaille.com';       // Specify main and backup SMTP servers
+	$mail->Host = 'mail.chrislacaille.com; ns8341.hostgator.com';       // Specify main and backup SMTP servers
 	$mail->SMTPAuth = true;                               // Enable SMTP authentication
 	$mail->Username = 'chris@chrislacaille.com';                 // SMTP username
 	$mail->Password = 'saitek150';                           // SMTP password
