@@ -6,8 +6,9 @@
         // Get the form fields and remove whitespace.
         $name = strip_tags(trim($_POST["name"]));
                 $name = str_replace(array("\r","\n"),array(" "," "),$name);
-        $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
+        // $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
         $message = trim($_POST["message"]);
+        $email = trim($_POST["email"]);
 
         // $name = $_POST["name"];
         // $email = $_POST["email"];
@@ -21,8 +22,6 @@
             exit;
         }
 
-        $recipient = $email;
-
         // Set the email subject.
         $subject = "New contact from $name";
 
@@ -32,7 +31,7 @@
 
 
         // Send the email.
-        if (mail($recipient, $subject, $email_content)) {
+        if (mail($email, $subject, $email_content)) {
             // Set a 200 (okay) response code.
             http_response_code(200);
             echo "Thank You! Your message has been sent.";

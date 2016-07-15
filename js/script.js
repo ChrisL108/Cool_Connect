@@ -12,21 +12,21 @@ $(document).ready(function() {
 	var $submit = $('button#sendButton');
 
 	$submit.on('click', function() {
-		validator();
+		// validator();
+		console.log(sendMessage( $smsInfo.val() + 
+									 getServiceEmail( $smsCarrier.val()[0] )) );
 	});
 
-
-	var editedNum, editedCarrier;
 	// Validate which inputs are checked 
 	// and remove whitespace/spcial characters
 	function validator() {
 		if ( $smsCheck.is(':checked') && $smsInfo.val() ) {
-			editedNum = $smsInfo.val();
-			editedCarrier = getServiceEmail( $smsCarrier.val() );
-			// .replace(/[^A-Z0-9]/ig, "")
-			sendMessage( editedNum + editedCarrier );
 			
-			console.log("SMS Sent...");
+			// .replace(/[^A-Z0-9]/ig, "")
+			console.log(sendMessage( $smsInfo.val() + 
+									 getServiceEmail( $smsCarrier.val()[0] )) );
+			
+			console.log("sms email sent");
 			$smsInfo.slideUp();
 			$smsCarrier.slideUp();
 		}
@@ -44,14 +44,14 @@ $(document).ready(function() {
 	}
 
 	// function that handles AJAX calls
-	function sendMessage(recipientEmail) {
+	function sendMessage($email) {
 
 		$.ajax({
 			url: 'messenger.php',
 			type: 'POST',
 			data: { name: $name.val(),
 					message: $message.val(),
-					email: recipientEmail
+					email: $email
 				},
 		})
 		.done(function() {
@@ -85,7 +85,7 @@ $(document).ready(function() {
 			case 'suncom' : return '@tms.suncom.com';
 			case 'qwest' : return '@qwestmp.com';
 			case 'usc' : return '@email.uscc.net';
-
+			default: return "None";
 		}
 	}
 
