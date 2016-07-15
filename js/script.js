@@ -117,6 +117,14 @@ $(document).ready(function() {
 }); // doc ready()
 
 
+// ~~~~~~~~~~~Get SMTP server names
+
+// Open up a command prompt (CMD.exe)
+// Type nslookup and hit enter
+// Type set type=MX and hit enter
+// Type the domain name and hit enter, for example: google.com
+// The results will be a list of host names that are set up for SMTP
+
 // AT&T: number@txt.att.net
 // T-Mobile: number@tmomail.net
 // Verizon: number@vtext.com
