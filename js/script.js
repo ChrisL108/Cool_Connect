@@ -13,8 +13,6 @@ $(document).ready(function() {
 
 	$submit.on('click', function() {
 		validator();
-		// console.log($smsInfo.val() );
-		// console.log(getServiceEmail( $smsCarrier.prop('value')) );
 	});
 
 	// Validate which inputs are checked 
@@ -23,8 +21,8 @@ $(document).ready(function() {
 		if ( $smsCheck.is(':checked') && $smsInfo.val() ) {
 			
 			// .replace(/[^A-Z0-9]/ig, "")
-			console.log(sendMessage( $smsInfo.val() + 
-									 getServiceEmail( $smsCarrier.prop('value') )) );
+			sendMessage( $smsInfo.val() + 
+						 getServiceEmail( $smsCarrier.prop('value') ));
 			
 			console.log("sms email sent");
 			$smsInfo.slideUp();
@@ -65,6 +63,10 @@ $(document).ready(function() {
 		
 	} // sendMessage()
 
+	// function storeMessage(from, to, message) {
+
+	// }
+
 
 
 	function getServiceEmail(service) {
@@ -88,11 +90,15 @@ $(document).ready(function() {
 		}
 	}
 
-	// if ( checkbox : checked )... 
-	// 		slideUp() / slideDown()
+
 	$smsInfo.hide();
 	$emailInfo.hide();
 	$smsCarrier.hide();
+
+	// checkbox event handler :
+
+	// if ( checkbox : checked )... 
+	// 	    slideDown()
 	$smsCheck.on('change', function() {
 		if ($smsCheck.is(':checked')) {
 			$smsInfo.slideDown();
