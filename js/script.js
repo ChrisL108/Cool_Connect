@@ -12,9 +12,9 @@ $(document).ready(function() {
 	var $submit = $('button#sendButton');
 
 	$submit.on('click', function() {
-		// validator();
-		console.log(sendMessage( $smsInfo.val() + 
-									 getServiceEmail( $smsCarrier.val()[0] )) );
+		validator();
+		// console.log($smsInfo.val() );
+		// console.log(getServiceEmail( $smsCarrier.prop('value')) );
 	});
 
 	// Validate which inputs are checked 
@@ -24,7 +24,7 @@ $(document).ready(function() {
 			
 			// .replace(/[^A-Z0-9]/ig, "")
 			console.log(sendMessage( $smsInfo.val() + 
-									 getServiceEmail( $smsCarrier.val()[0] )) );
+									 getServiceEmail( $smsCarrier.prop('value') )) );
 			
 			console.log("sms email sent");
 			$smsInfo.slideUp();
@@ -32,14 +32,13 @@ $(document).ready(function() {
 		}
 		if ( $emailCheck.is(':checked') && $emailInfo.val() )  {
 			sendMessage( $emailInfo.val() );
-			console.log("EMAIL Sent...");
+			console.log("regular email Sent...");
 			$emailInfo.slideUp();
 		}
 
 		$inputs.val("");
-		$inputs.prop('checked', false);
-		// $smsCheck.prop('checked', false);  
-		// $emailCheck.prop('checked', false); // Unchecks it
+		$smsCheck.prop('checked', false);  
+		$emailCheck.prop('checked', false); // Unchecks it
 
 	}
 
@@ -47,7 +46,7 @@ $(document).ready(function() {
 	function sendMessage($email) {
 
 		$.ajax({
-			url: 'messenger.php',
+			url: 'phpMailer/connect_mailer.php',
 			type: 'POST',
 			data: { name: $name.val(),
 					message: $message.val(),
@@ -85,7 +84,7 @@ $(document).ready(function() {
 			case 'suncom' : return '@tms.suncom.com';
 			case 'qwest' : return '@qwestmp.com';
 			case 'usc' : return '@email.uscc.net';
-			default: return "None";
+			default: return "Not a valid service provider.";
 		}
 	}
 
