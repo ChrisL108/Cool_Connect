@@ -16,6 +16,7 @@
 
 	$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
+<<<<<<< HEAD
 	$mail->isSMTP();                                      // Set mailer to use SMTP
 	$mail->Host = 'ns8341.hostgator.com';       // Specify main and backup SMTP servers
 	$mail->SMTPAuth = true;                               // Enable SMTP authentication
@@ -30,12 +31,17 @@
 	// $mail->addReplyTo('info@example.com', 'Information');
 	// $mail->addCC('cc@example.com');
 	// $mail->addBCC('bcc@example.com');
+=======
 
-	// $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-	// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-	// $mail->isHTML(true);                                  // Set email format to HTML
 
-	$mail->Subject = 'Message from Cool Connect';
+	$mail->setFrom('chrislacaille5@gmail.com', $name);
+	$mail->addAddress($email);               // Name is optional
+	// $mail->addAddress('example@example.com', 'Joe User');     // Add a recipient
+>>>>>>> 20b45b5c904fab087b290948d51d6a22ad6bbb7a
+
+	$mailsubject = 'Message from ' . $name;
+
+	$mail->Subject = $mailsubject ;
 	$mail->Body    = $message;
 	// $mail->AltBody = $message;
 
@@ -47,3 +53,20 @@
 	}
 
 
+	// $mail->isSMTP();                                      // Set mailer to use SMTP
+	// $mail->Host = 'ns8341.hostgator.com';       // Specify main and backup SMTP servers
+	// $mail->SMTPAuth = true;                               // Enable SMTP authentication
+	// $mail->Username = 'chris@chrislacaille.com';                 // SMTP username
+	// $mail->Password = 'saitek150';                           // SMTP password
+	// $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+	// $mail->Port = 587;                                    // TCP port to connect to
+
+
+	
+	// $mail->addReplyTo('info@example.com', 'Information');
+	// $mail->addCC('cc@example.com');
+	// $mail->addBCC('bcc@example.com');
+
+	// $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+	// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+	// $mail->isHTML(true);                                  // Set email format to HTML

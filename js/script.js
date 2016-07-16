@@ -7,6 +7,7 @@ $(document).ready(function() {
 	var $emailCheck = $('#email-check'),
 		$emailInfo = $('#email-info'); // email to send to
 	var $name = $('#name'); // name of sender
+	// var $senderEmail = $('#senderEmail').val();
 	var $message = $('#message'); //message to send
 	var $inputs = $('input'); // to clear after submit
 	var $submit = $('button#sendButton'); //submit button
@@ -75,11 +76,16 @@ $(document).ready(function() {
 			data: { name: $name.val(),
 					message: $message.val(),
 					email: $email
+					// sender: $senderEmail
 			},
 			success: function(){
 			 	// add to list if successful
+<<<<<<< HEAD
 		        addItemToStorage($email, $message.val() );
 		        console.log("in Ajax - " + $email + $message.val() );
+=======
+		        addToList($email, $message.val() );
+>>>>>>> 20b45b5c904fab087b290948d51d6a22ad6bbb7a
 		        $('.success').fadeIn(1000)
 		        			 .fadeOut(1000);
 		    }
@@ -112,9 +118,14 @@ $(document).ready(function() {
 
 		localStorage.setItem(listTo, listMsg);
 		
+<<<<<<< HEAD
 		itemToAdd = '<li>'+listTo+ ' : ' + listMsg + '</li>';
 		$historyList.append(itemToAdd);
 		console.log("in addItemToStorage() - " + listTo + $message.val());
+=======
+		itemToAdd = '<li><u>'+listTo+ '</u>:' + listMsg + '</li>';
+		$historyList.append(itemToAdd);
+>>>>>>> 20b45b5c904fab087b290948d51d6a22ad6bbb7a
 	}
 
 	function getServiceEmail(service) {
