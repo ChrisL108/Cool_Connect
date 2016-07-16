@@ -13,21 +13,30 @@ $(document).ready(function() {
 	var $clear = $('#clearButton');
 	// list of messages sent
 	var $historyList = $('ul#history');
-	// item variable for adding to history list
-	var itemToAdd; 
+
+	// variable for using localStorage (LATER IMPLEMENTATION)
+	// var jsLoopStorage, jsStoreObject;
 
 	$submit.on('click', function() {
 		validator();
 	});
-	var sendTo, msg;
+
+	var sendTo, sendMsg, itemToAdd;
 	// populate history list on page load
 	(function() {
 		
 		for (var i=0; i < localStorage.length; i++) {
+			//FOR LATER IMPLEMENTATION OF STORAGE
+			// jsLoopStorage = JSON.parse(localStorage.getItem( 'keys' ) );
+			// sendTo = jsLoopStorage[i]['to'];
+			// sendMsg = jsLoopStorage[i]['msg'];
+
+			// stores one message per contact
 			sendTo = localStorage.key(i);
-			msg = localStorage.getItem(sendTo);
+			sendMsg = localStorage.getItem(sendTo);
 			
-			addToList(sendTo, msg);
+			
+			addItemToStorage( sendTo, sendMsg );
 		}
 	})();
 
@@ -69,7 +78,7 @@ $(document).ready(function() {
 			},
 			success: function(){
 			 	// add to list if successful
-		        addToList($email, $message.val() );
+		        addItemToStorage($email, $message.val() );
 		        console.log("in Ajax - " + $email + $message.val() );
 		        $('.success').fadeIn(1000)
 		        			 .fadeOut(1000);
@@ -88,12 +97,24 @@ $(document).ready(function() {
 	} // sendMessage()
 
 	// function for adding items to list & localStorage
-	function addToList(listTo, listMsg) {
+
+
+
+	function addItemToStorage(listTo, listMsg) {
+
+		//FOR LATER IMPLEMENTATION OF STORAGE
+		
+		// jsStoreObject = JSON.parse( localStorage.getItem( 'keys' ) );
+
+		// jsStoreObject += {to: listTo, msg: listMsg} ;
+
+		// localStorage.setItem( 'keys', JSON.stringify( jsStoreObject ) );
+
 		localStorage.setItem(listTo, listMsg);
 		
-		itemToAdd = '<li>'+listTo+ ':' + listMsg + '</li>';
+		itemToAdd = '<li>'+listTo+ ' : ' + listMsg + '</li>';
 		$historyList.append(itemToAdd);
-		console.log("in addToList() - " + listTo + $message.val());
+		console.log("in addItemToStorage() - " + listTo + $message.val());
 	}
 
 	function getServiceEmail(service) {
@@ -119,14 +140,15 @@ $(document).ready(function() {
 
 	// event handlers
 
-	// $clear.on('click', function(event) {
-	// 	localStorage.clear();
-	// });
+	// clear storage button
+	$clear.on('click', function(event) {
+		localStorage.clear();
+	});
 
 	$smsInfo.hide();
 	$emailInfo.hide();
 	$smsCarrier.hide();
-	// checkbox event handler :
+	// CHECKBOX EVENT HANDLER :
 	// if ( checkbox : checked )... 
 	// 	    slideDown()
 	$smsCheck.on('change', function() {
