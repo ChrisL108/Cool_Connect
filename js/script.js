@@ -7,6 +7,7 @@ $(document).ready(function() {
 	var $emailCheck = $('#email-check'),
 		$emailInfo = $('#email-info'); // email to send to
 	var $name = $('#name'); // name of sender
+	// var $senderEmail = $('#senderEmail').val();
 	var $message = $('#message'); //message to send
 	var $inputs = $('input'); // to clear after submit
 	var $submit = $('button#sendButton'); //submit button
@@ -66,11 +67,11 @@ $(document).ready(function() {
 			data: { name: $name.val(),
 					message: $message.val(),
 					email: $email
+					// sender: $senderEmail
 			},
 			success: function(){
 			 	// add to list if successful
 		        addToList($email, $message.val() );
-		        console.log("in Ajax - " + $email + $message.val() );
 		        $('.success').fadeIn(1000)
 		        			 .fadeOut(1000);
 		    }
@@ -91,9 +92,8 @@ $(document).ready(function() {
 	function addToList(listTo, listMsg) {
 		localStorage.setItem(listTo, listMsg);
 		
-		itemToAdd = '<li>'+listTo+ ':' + listMsg + '</li>';
+		itemToAdd = '<li><u>'+listTo+ '</u>:' + listMsg + '</li>';
 		$historyList.append(itemToAdd);
-		console.log("in addToList() - " + listTo + $message.val());
 	}
 
 	function getServiceEmail(service) {
