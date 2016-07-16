@@ -30,7 +30,7 @@
         <!-- MESSAGE FORM -->
         <form action="POST">
           <input type="text" id="name" name="name" placeholder="Your Name.."><br>
-          <textarea name="message" id="message" cols="30" rows="5" placeholder="Type message here.."></textarea><br>
+          <textarea id="message" cols="30" rows="5" placeholder="Type message here.."></textarea><br>
           <!-- sms -->
           <fieldset class="form-group">
             <input type="checkbox" id="sms-check">
@@ -60,19 +60,22 @@
             <label for="email">Email</label><br>
             <input type="text" id="email-info" placeholder="Recipient Email">
           </fieldset>
-        </form>
+        </form> <!-- end form -->
 
+        <!-- send -->
         <button id="sendButton">Send Message(s)</button>
-
+        <p class="success">Message Sent!</p>
       </div>
-
-      <div class="history">
-        <ul>
+      
+      <!-- history -->
+      <div class="text-xs-center" id="history-wrapper">
+        <ul id="history">
           
         </ul>
+        <!-- <button id="clearButton">Clear History</button> -->
       </div>
 
-
+      <!-- footer -->
       <footer class="footer">
       <div class="row">
         <div class="col-md-6">
@@ -81,7 +84,7 @@
         <div class="col-md-6">
           <ul class="list-inline text-xs-center pull-right">
             <li class="nav-item active">
-              <a class="nav-link" href="http://chrislacaille.com">Portfolio Page <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="http://chrislacaille.com">Portfolio Page</a>
             </li>
           </ul>
         </div> <!-- col-6 -->

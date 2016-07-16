@@ -10,6 +10,16 @@ i {
 i:hover {
   color: gray;
 }
+.success {
+  display:none;
+}
+ul {
+  padding: 1rem 0;
+  margin: 0;
+}
+ul li {
+  list-style: none;
+}
 /* ~~ Bootstrap jumbotron (smaller)
       deafault CSS ~~ */
 

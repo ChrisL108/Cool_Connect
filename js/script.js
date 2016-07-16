@@ -1,27 +1,42 @@
 $(document).ready(function() {
 	'use strict';
 
-	var $smsCheck = $('#sms-check'),
-		$smsInfo = $('#sms-info'),
-		$smsCarrier = $('#carrier');
+	var $smsCheck = $('#sms-check'), 
+		$smsInfo = $('#sms-info'), //sms number to send to
+		$smsCarrier = $('#carrier'); //sms carrier name
 	var $emailCheck = $('#email-check'),
-		$emailInfo = $('#email-info');
-	var $name = $('#name');
-	var $message = $('#message');
-	var $inputs = $('input, textarea'); // to clear after submit
-	var $submit = $('button#sendButton');
+		$emailInfo = $('#email-info'); // email to send to
+	var $name = $('#name'); // name of sender
+	var $message = $('#message'); //message to send
+	var $inputs = $('input'); // to clear after submit
+	var $submit = $('button#sendButton'); //submit button
+	var $clear = $('#clearButton');
+	// list of messages sent
+	var $historyList = $('ul#history');
+	// item variable for adding to history list
+	var itemToAdd; 
 
 	$submit.on('click', function() {
 		validator();
 	});
+	var sendTo, msg;
+	// populate history list on page load
+	(function() {
+		
+		for (var i=0; i < localStorage.length; i++) {
+			sendTo = localStorage.key(i);
+			msg = localStorage.getItem(sendTo);
+			
+			addToList(sendTo, msg);
+		}
+	})();
 
 	// Validate which inputs are checked 
-	// and remove whitespace/spcial characters
+	// and remove whitespace/special characters
 	function validator() {
 		if ( $smsCheck.is(':checked') && $smsInfo.val() ) {
 			
-			// .replace(/[^A-Z0-9]/ig, "")
-			sendMessage( $smsInfo.val() + 
+			sendMessage( $smsInfo.val().replace(/[^A-Z0-9]/ig, "") + 
 						 getServiceEmail( $smsCarrier.prop('value') ));
 			
 			console.log("sms email sent");
@@ -34,9 +49,11 @@ $(document).ready(function() {
 			$emailInfo.slideUp();
 		}
 
+		// clear inputs
 		$inputs.val("");
+		// uncheck checkboxes
 		$smsCheck.prop('checked', false);  
-		$emailCheck.prop('checked', false); // Unchecks it
+		$emailCheck.prop('checked', false); 
 
 	}
 
@@ -49,7 +66,14 @@ $(document).ready(function() {
 			data: { name: $name.val(),
 					message: $message.val(),
 					email: $email
-				},
+			},
+			success: function(){
+			 	// add to list if successful
+		        addToList($email, $message.val() );
+		        console.log("in Ajax - " + $email + $message.val() );
+		        $('.success').fadeIn(1000)
+		        			 .fadeOut(1000);
+		    }
 		})
 		.done(function() {
 			console.log("Message Sent!");
@@ -63,11 +87,14 @@ $(document).ready(function() {
 		
 	} // sendMessage()
 
-	// function storeMessage(from, to, message) {
-
-	// }
-
-
+	// function for adding items to list & localStorage
+	function addToList(listTo, listMsg) {
+		localStorage.setItem(listTo, listMsg);
+		
+		itemToAdd = '<li>'+listTo+ ':' + listMsg + '</li>';
+		$historyList.append(itemToAdd);
+		console.log("in addToList() - " + listTo + $message.val());
+	}
 
 	function getServiceEmail(service) {
 		switch(service) {
@@ -90,13 +117,16 @@ $(document).ready(function() {
 		}
 	}
 
+	// event handlers
+
+	// $clear.on('click', function(event) {
+	// 	localStorage.clear();
+	// });
 
 	$smsInfo.hide();
 	$emailInfo.hide();
 	$smsCarrier.hide();
-
 	// checkbox event handler :
-
 	// if ( checkbox : checked )... 
 	// 	    slideDown()
 	$smsCheck.on('change', function() {
