@@ -7,16 +7,16 @@ $(document).ready(function() {
 	var $emailCheck = $('#email-check'), //for checkbox verification
 		$emailInfo = $('#email-info'); // email to send to
 	var $name = $('#name'); // name of sender
-	var $senderEmail = $('#senderEmail');
+	var $senderEmail = $('#senderEmail'); //email of sender
 	var $message = $('#message'); //message to send
 	var $inputs = $('input'); // to clear after submit
-	var $submit = $('button#sendButton'); //submit button
-	var $clear = $('#clearButton');
+	var $submit = $('button#sendButton'); //submit - button
+	var $clear = $('#clearButton'); //clear history - button
 	// list of messages sent
 	var $historyList = $('ul#history');
 	
 
-	// variable for using localStorage 
+	// variable for using localStorage & JSON
 	var storageKeys;
 	var sendTo, sendMsg;
 	// populate history list on page load
@@ -29,14 +29,13 @@ $(document).ready(function() {
 					sendTo = i[0];
 					sendMsg = i[1];
 					console.log(storageKeys.length);
-					// addItemToStorage( sendTo, sendMsg );
 					addItemToList(sendTo, sendMsg);
 				}
 			}
 		}
 	})();
 
-	// function for adding items to list & localStorage
+	// function for adding items to history & localStorage
 	var itemToAdd;
 	var jsStoreObject = [];
 
@@ -62,10 +61,8 @@ $(document).ready(function() {
 	// and remove whitespace/special characters
 	function validator() {
 		if ( $smsCheck.is(':checked') && $smsInfo.val() ) {
-			
 			sendMessage( $smsInfo.val().replace(/[^A-Z0-9]/ig, "") + 
 						 getServiceEmail( $smsCarrier.prop('value') ));
-			
 			console.log("sms email sent");
 			$smsInfo.slideUp();
 			$smsCarrier.slideUp();
@@ -78,6 +75,7 @@ $(document).ready(function() {
 
 		// clear inputs
 		$inputs.val("");
+		$message.val("");
 		// uncheck checkboxes
 		$smsCheck.prop('checked', false);  
 		$emailCheck.prop('checked', false); 
