@@ -23,10 +23,11 @@
 	$mail->Username = 'chris@chrislacaille.com';                 // SMTP username
 	$mail->Password = 'saitek150';                           // SMTP password
 	$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-	$mail->Port = 587;                                    // TCP port to connect to
+	$mail->Port = 587;      							// TCP port to connect to
 
-	$mail->setFrom("chrislacaille5@gmail.com", $name);
-	// $mail->addAddress('example@example.com', 'Joe User');     // Add a recipient
+	
+	$mail->setFrom($sender, $name);
+
 	$mail->addAddress($email);               // Name is optional
 	// $mail->addReplyTo('info@example.com', 'Information');
 	// $mail->addCC('cc@example.com');

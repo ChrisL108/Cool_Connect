@@ -1,10 +1,10 @@
 $(document).ready(function() {
 	'use strict';
 
-	var $smsCheck = $('#sms-check'), 
+	var $smsCheck = $('#sms-check'), //for checkbox verification
 		$smsInfo = $('#sms-info'), //sms number to send to
 		$smsCarrier = $('#carrier'); //sms carrier name
-	var $emailCheck = $('#email-check'),
+	var $emailCheck = $('#email-check'), //for checkbox verification
 		$emailInfo = $('#email-info'); // email to send to
 	var $name = $('#name'); // name of sender
 	var $senderEmail = $('#senderEmail');
@@ -14,32 +14,49 @@ $(document).ready(function() {
 	var $clear = $('#clearButton');
 	// list of messages sent
 	var $historyList = $('ul#history');
+	
 
-	// variable for using localStorage (LATER IMPLEMENTATION)
-	// var jsLoopStorage, jsStoreObject;
-
-	$submit.on('click', function() {
-		validator();
-	});
-
-	var sendTo, sendMsg, itemToAdd;
+	// variable for using localStorage 
+	var storageKeys;
+	var sendTo, sendMsg;
 	// populate history list on page load
 	(function() {
-		
-		for (var i=0; i < localStorage.length; i++) {
-			//FOR LATER IMPLEMENTATION OF STORAGE
-			// jsLoopStorage = JSON.parse(localStorage.getItem( 'keys' ) );
-			// sendTo = jsLoopStorage[i]['to'];
-			// sendMsg = jsLoopStorage[i]['msg'];
-
-			// stores one message per contact
-			sendTo = localStorage.key(i);
-			sendMsg = localStorage.getItem(sendTo);
-			
-			
-			addItemToStorage( sendTo, sendMsg );
+		storageKeys = JSON.parse( localStorage.getItem('keys') );
+		if ( $('#history li').length === 0 && storageKeys )  {
+			console.log(storageKeys);
+			for (var i of storageKeys) {
+				if (i[0]) {
+					sendTo = i[0];
+					sendMsg = i[1];
+					console.log(storageKeys.length);
+					// addItemToStorage( sendTo, sendMsg );
+					addItemToList(sendTo, sendMsg);
+				}
+			}
 		}
 	})();
+
+	// function for adding items to list & localStorage
+	var itemToAdd;
+	var jsStoreObject = [];
+
+	function addItemToStorage(listTo, listMsg) {
+		if ( localStorage.getItem('keys') ) {
+			jsStoreObject = JSON.parse( localStorage.getItem( 'keys' ) );
+			jsStoreObject.push([listTo, listMsg]);
+			localStorage.setItem('keys', JSON.stringify(jsStoreObject) );
+		} else {
+			jsStoreObject.push([listTo, listMsg]);
+			localStorage.setItem('keys', JSON.stringify(jsStoreObject) );
+		}
+		addItemToList(listTo, listMsg);
+	}
+
+	function addItemToList(name, message) {
+		itemToAdd = '<li><u>'+ name + '</u>:' +
+					 message + '</li>';
+		$historyList.prepend(itemToAdd);
+	}
 
 	// Validate which inputs are checked 
 	// and remove whitespace/special characters
@@ -99,27 +116,6 @@ $(document).ready(function() {
 		
 	} // sendMessage()
 
-	// function for adding items to list & localStorage
-
-
-
-	function addItemToStorage(listTo, listMsg) {
-
-		//FOR LATER IMPLEMENTATION OF STORAGE
-		
-		// jsStoreObject = JSON.parse( localStorage.getItem( 'keys' ) );
-
-		// jsStoreObject += {to: listTo, msg: listMsg} ;
-
-		// localStorage.setItem( 'keys', JSON.stringify( jsStoreObject ) );
-
-		localStorage.setItem(listTo, listMsg);
-		
-
-		itemToAdd = '<li><u>'+listTo+ '</u>:' + listMsg + '</li>';
-		$historyList.append(itemToAdd);
-	}
-
 	function getServiceEmail(service) {
 		switch(service) {
 			case 'att' : return '@txt.att.net';
@@ -137,15 +133,21 @@ $(document).ready(function() {
 			case 'suncom' : return '@tms.suncom.com';
 			case 'qwest' : return '@qwestmp.com';
 			case 'usc' : return '@email.uscc.net';
-			default: return "Not a valid service provider.";
+			default: return "(Need service provider)";
 		}
 	}
 
-	// event handlers
+	// ~~~~ EVENT HANDLERS ~~~~
+
+	// on submit run validator
+	$submit.on('click', function() {
+		validator();
+	});
 
 	// clear storage button
 	$clear.on('click', function(event) {
 		localStorage.clear();
+		$historyList.empty();
 	});
 
 	$smsInfo.hide();
